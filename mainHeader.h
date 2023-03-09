@@ -5,9 +5,11 @@
 #include <functional>
 using namespace std;
 
-
 #include "TaskType/task.h"
 #include "TaskType/fastTask.h"
 #include "TaskType/dailyTask.h"
+
+#include "TaskType/tasksController.h"
+
 #include "Functions/CommandsList.h"
 #include "Functions/Commands.h"

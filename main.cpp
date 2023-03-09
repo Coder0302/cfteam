@@ -8,7 +8,7 @@ int main()
 	{
 		string cmd;
 		cout << "Герой: ";
-		cin >> cmd;
+		getline(cin, cmd);
 		string answer = ExecuteCommand(cmd);
 		cout << "Компьютер: " << answer << endl;
 	}

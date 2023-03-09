@@ -2,7 +2,7 @@
 
 struct BaseCommand
 {
-	BaseCommand(vector<string> _cmds, string _description, string(*_func)())
+	BaseCommand(vector<string> _cmds, string _description, string(*_func)(string))
 	{
 		cmds = _cmds;
 		description = _description;
@@ -10,12 +10,14 @@ struct BaseCommand
 	}
 	vector<string> cmds;
 	string description;
-	string(*func)();
+	string(*func)(string);
 };
 
 vector<BaseCommand> cmdList;
 	
-string help()
+	
+	
+string help(string s)
 {
 	string list = "";
 	for (int i = 0; i < cmdList.size(); i++)
@@ -29,16 +31,45 @@ string help()
 	}
 	return list;
 }
-string quit()
+
+string addFastTask(string s)
+{
+	string n = s.substr(0, s.find(" "));
+	string d = s.substr(s.find(" ")+1, s.size());
+	taskManager.addFastTask(n, d);
+	return "Задача добавленна!";
+}
+string removeFastTask(string s)
+{
+	taskManager.removeFastTask(stoi(s));
+	return "Задача удалена!";
+}
+string completeFastTask(string s)
+{
+	taskManager.completeFastTask(stoi(s));
+	return "Задача выполнена!";
+}
+string listFastTask(string s)
+{
+	return taskManager.getListAllFastTasks();
+}
+
+string quit(string s)
 {
 	exit(0);
 	return "Удачного дня Герой!";
 }
 
+
+	
 vector<BaseCommand> getListCommands()
 {
 	cmdList.clear();
 	cmdList.push_back(BaseCommand({"help", "h"}, "Выводит список всех комманд", help));
 	cmdList.push_back(BaseCommand({"quit", "q"}, "Выходит из приложения", quit));
+	cmdList.push_back(BaseCommand({"addFastTask", "aft"}, "Добавляет временную задачу", addFastTask));
+	cmdList.push_back(BaseCommand({"removeFastTask", "rft"}, "Удаляет временную задачу", removeFastTask));
+	cmdList.push_back(BaseCommand({"completeFastTask", "cft"}, "Отмечает временную задачу как выполненная", completeFastTask));
+	cmdList.push_back(BaseCommand({"listFastTask", "list"}, "Выводит список всех задач", listFastTask));
 	return cmdList;
 }
