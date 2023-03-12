@@ -34,8 +34,11 @@ string help(string s)
 
 string addFastTask(string s)
 {
-	string n = s.substr(0, s.find(" "));
-	string d = s.substr(s.find(" ")+1, s.size());
+	string n, d;
+	cout << "Название задачи: ";
+	getline(cin, n);
+	cout << "Описание задачи: ";
+	getline(cin, d);
 	taskManager.addFastTask(n, d);
 	return "Задача добавленна!";
 }
@@ -46,30 +49,34 @@ string removeFastTask(string s)
 }
 string completeFastTask(string s)
 {
-	taskManager.completeFastTask(stoi(s));
+	taskManager.completeFastTask(stoi(s)-1);
 	return "Задача выполнена!";
 }
 string listFastTask(string s)
 {
 	return taskManager.getListAllFastTasks();
 }
-
 string quit(string s)
 {
 	exit(0);
 	return "Удачного дня Герой!";
 }
-
+string clear(string s)
+{
+	system("clear");
+	return "Очищено!";
+}
 
 	
 vector<BaseCommand> getListCommands()
 {
 	cmdList.clear();
-	cmdList.push_back(BaseCommand({"help", "h"}, "Выводит список всех комманд", help));
-	cmdList.push_back(BaseCommand({"quit", "q"}, "Выходит из приложения", quit));
-	cmdList.push_back(BaseCommand({"addFastTask", "aft"}, "Добавляет временную задачу", addFastTask));
-	cmdList.push_back(BaseCommand({"removeFastTask", "rft"}, "Удаляет временную задачу", removeFastTask));
-	cmdList.push_back(BaseCommand({"completeFastTask", "cft"}, "Отмечает временную задачу как выполненная", completeFastTask));
-	cmdList.push_back(BaseCommand({"listFastTask", "list"}, "Выводит список всех задач", listFastTask));
+	cmdList.push_back(BaseCommand({"aa", "ask artorius"}, "Выводит список всех комманд", help));
+	cmdList.push_back(BaseCommand({"q", "quit"}, "Выходит из приложения", quit));
+	cmdList.push_back(BaseCommand({"at", "add task"}, "Добавляет временную задачу", addFastTask));
+	cmdList.push_back(BaseCommand({"dt", "delete task"}, "Удаляет временную задачу", removeFastTask));
+	cmdList.push_back(BaseCommand({"ct", "complete task"}, "Отмечает временную задачу как выполненная", completeFastTask));
+	cmdList.push_back(BaseCommand({"ab", "adventurer board"}, "Выводит список всех задач", listFastTask));
+	cmdList.push_back(BaseCommand({"c", "clear"}, "Очищает консоль", clear));
 	return cmdList;
 }

@@ -2,7 +2,7 @@
 
 string ExecuteCommand(string str)
 {
-	string result = "Прости меня, я не понимаю что ты хочешь.\n Ты можешь написать help и узнать что я точно смогу сделать!";
+	string result = "Прости меня, я не понимаю что ты хочешь.\n Ты можешь написать aa и узнать что я точно смогу сделать!";
 	
 	vector<BaseCommand> cmdList;
 	cmdList = getListCommands();

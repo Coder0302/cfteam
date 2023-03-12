@@ -2,11 +2,11 @@
 class Task
 {
 public:
-	Task(string n, string d)
+	Task(string n, string d, bool ic = false)
 	{
 		name = n;
 		description = d;
-		isComplete = false;
+		isComplete = ic;
 	}
 
 	string name;

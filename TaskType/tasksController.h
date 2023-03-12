@@ -2,32 +2,31 @@
 
 class TasksManager
 {
-private:
-	vector<FastTask> fastTasks;
-	vector<DailyTask> dailyTasks;
 public:
 	void addFastTask(string n, string d)
 	{
-		fastTasks.push_back(FastTask(n, d));
+		USER.fastTasks.push_back(FastTask(n, d));
 	}
 	
 	void removeFastTask(int numTask)
 	{
-		fastTasks.erase(fastTasks.cbegin() + numTask);
+		USER.fastTasks.erase(USER.fastTasks.cbegin() + numTask);
 	}
 	
 	void completeFastTask(int numTask)
 	{
-		fastTasks[numTask].isComplete = true;
+		USER.fastTasks[numTask].isComplete = true;
 	}
 	
 	string getListAllFastTasks()
 	{
-		cout << "\n";
-		string list = "";
-		for (int i = 0; i < fastTasks.size(); i++)
+		string list = "\n";
+		for (int i = 0; i < USER.fastTasks.size(); i++)
 		{
-			list += (fastTasks[i].isComplete?"[+]":"[-]") + to_string(i) + ") " + fastTasks[i].name + "\n" + fastTasks[i].description + "\n";
+			string f = "[-]";
+			if (USER.fastTasks[i].isComplete)
+				f = "[+]";
+			list += to_string(i+1) + ") " + f + "\nНазвание: " + USER.fastTasks[i].name + "\nОписание: " + USER.fastTasks[i].description + "\n";
 		}
 		return list;
 	}
