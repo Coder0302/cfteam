@@ -28,7 +28,6 @@ public:
 			name = to_string(rand());
 			money = 0;
 			exp = 0;
-			isUserInit = true;
 		}
 		_profile = _p;
 	}
@@ -50,31 +49,34 @@ public:
 		MainSave::SetSave("exp", to_string(exp));
 		MainSave::SetSave("isUserInit", (isUserInit?"true":"false"));
 		
+		MainSave::SetSave("FastTaskSaveCount", to_string(fastTasks.size()));
+		
 		// Saving Fast Tasks
 		string saveFT = "";
-		for (FastTask ft : fastTasks)
+		for (int i = 0; i < fastTasks.size(); i++)
 		{
-			string b = (ft.isComplete?"True":"False");
-			saveFT += ft.name + "♡" + ft.description + "♢" + b + "♤";
+			MainSave::SetSave("FastTaskSaveName" + to_string(i), fastTasks[i].name);
+			MainSave::SetSave("FastTaskSaveDescr" + to_string(i), fastTasks[i].description);
+			MainSave::SetSave("FastTaskSaveIsComplete" + to_string(i),(fastTasks[i].isComplete?"True":"False"));
 		}
-		MainSave::SetSave("FastTaskSave", saveFT);
+		
+		MainSave::SaveInFile();
 	}
 	
 	void LoadInfo()
-	{
+	{	
 		name = MainSave::GetSave("name");
 		money = stoi(MainSave::GetSave("money"));
 		exp = stoi(MainSave::GetSave("exp"));
 		isUserInit = (MainSave::GetSave("isUserInit")=="true"?true:false);
 		
 		// Loading Fast Tasks
-		string saveFT = MainSave::GetSave("FastTaskSave");
-		while (saveFT.find("♤") != -1 && saveFT != "")
+		int count = stoi(MainSave::GetSave("FastTaskSaveCount"));
+		for (int i = 0; i < count; i++)
 		{
-			string n = saveFT.substr(0, saveFT.find("♡"));
-			string d = saveFT.substr(int(saveFT.find("♡"))+1,saveFT.find("♢"));
-			bool b = (saveFT.substr(int(saveFT.find("♢"))+1, saveFT.find("♤"))=="True"?true:false);
-			saveFT = saveFT.substr(int(saveFT.find("♤"))+1);
+			string n = MainSave::GetSave("FastTaskSaveName" + to_string(i));
+			string d = MainSave::GetSave("FastTaskSaveDescr" + to_string(i));
+			bool b = (MainSave::GetSave("FastTaskSaveIsComplete" + to_string(i))=="True"?true:false);
 			fastTasks.push_back(FastTask(n, d, b));
 		}
 	}
