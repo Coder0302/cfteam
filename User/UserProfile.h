@@ -11,9 +11,6 @@ public:
 	vector<FastTask> fastTasks;
 	vector<DailyTask> dailyTasks;
 	bool isUserInit;
-// Информация аккаунта
-	string email;
-	string password;
 	
 	Profile(){}
 	
@@ -61,15 +58,20 @@ public:
 		}
 		
 		MainSave::SaveInFile();
+		
+		OnlineSaves::UploadSave();
 	}
 	
 	void LoadInfo()
 	{	
+		OnlineSaves::DownloadSave();
+		
+		MainSave::LoadFromFile();
+		
 		name = MainSave::GetSave("name");
 		money = stoi(MainSave::GetSave("money"));
 		exp = stoi(MainSave::GetSave("exp"));
 		isUserInit = (MainSave::GetSave("isUserInit")=="true"?true:false);
-		
 		// Loading Fast Tasks
 		int count = stoi(MainSave::GetSave("FastTaskSaveCount"));
 		for (int i = 0; i < count; i++)
@@ -79,6 +81,14 @@ public:
 			bool b = (MainSave::GetSave("FastTaskSaveIsComplete" + to_string(i))=="True"?true:false);
 			fastTasks.push_back(FastTask(n, d, b));
 		}
+	}
+	
+	void CreateCloudAccount(string e, string p)
+	{
+		string s = e + "\n" + p;
+		ofstream out(".saves/account.save");
+    	out << s;
+    	out.close();
 	}
 	
 	static Profile* GetUser()

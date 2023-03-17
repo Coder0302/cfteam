@@ -1,5 +1,4 @@
 #include "../mainHeader.h"
-#define BASE_FILE_PATH ".saves/save.save"
 
 class MainSave
 {
@@ -60,10 +59,10 @@ public:
 	
 	static void LoadFromFile(string filePath = BASE_FILE_PATH)
 	{
-		allSaves.clear();	
+		allSaves.clear();
 	
-		std::string line;
-	    std::ifstream in(filePath); // окрываем файл для чтения
+		string line;
+	    ifstream in(filePath); // окрываем файл для чтения
     	if (in.is_open())
   		{
     	    while (getline(in, line) && line != "")

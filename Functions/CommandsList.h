@@ -66,7 +66,16 @@ string clear(string s)
 	system("clear");
 	return "Очищено!";
 }
-
+string create_account(string s)
+{
+	string email, pass;
+	cout << "Введите вашу почту: ";
+	getline(cin, email);
+	cout << "Создайте пароль: ";
+	getline(cin, pass);
+	USER.CreateCloudAccount(email, pass);
+	return "Аккаунт создан!";
+}
 	
 vector<BaseCommand> getListCommands()
 {
@@ -78,5 +87,6 @@ vector<BaseCommand> getListCommands()
 	cmdList.push_back(BaseCommand({"ct", "complete task"}, "Отмечает временную задачу как выполненная", completeFastTask));
 	cmdList.push_back(BaseCommand({"ab", "adventurer board"}, "Выводит список всех задач", listFastTask));
 	cmdList.push_back(BaseCommand({"c", "clear"}, "Очищает консоль", clear));
+	cmdList.push_back(BaseCommand({"cloud", "cl"}, "Создать аккаунт в сети", create_account));
 	return cmdList;
 }
